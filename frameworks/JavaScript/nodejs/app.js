@@ -3,14 +3,25 @@ const numCPUs = require('os').cpus().length;
 
 process.env.NODE_HANDLER = 'mysql-raw';
 
-if (process.env.TFB_TEST_NAME === 'nodejs-mongodb') {
-  process.env.NODE_HANDLER = 'mongoose';
-} else if (process.env.TFB_TEST_NAME === 'nodejs-mongodb-raw') {
-  process.env.NODE_HANDLER = 'mongodb-raw';
-} else if (process.env.TFB_TEST_NAME === 'nodejs-mysql') {
-  process.env.NODE_HANDLER = 'sequelize';
-} else if (process.env.TFB_TEST_NAME === 'nodejs-postgres') {
-  process.env.NODE_HANDLER = 'sequelize-postgres';
+switch (process.env.TFB_TEST_NAME) {
+  case 'nodejs-mongodb':
+    process.env.NODE_HANDLER = 'mongoose';
+    break;
+  case 'nodejs-mongodb-raw':
+    process.env.NODE_HANDLER = 'mongodb-raw';
+    break;
+  case 'nodejs-mysql':
+    process.env.NODE_HANDLER = 'sequelize';
+    break;
+  case 'nodejs-postgres':
+    process.env.NODE_HANDLER = 'sequelize-postgres';
+    break;
+  case 'nodejs-mariadb':
+    process.env.NODE_HANDLER = 'sequelize-mariadb';
+    break;
+  case 'nodejs-mariadb-raw':
+    process.env.NODE_HANDLER = 'mariadb-raw';
+    break;
 }
 
 if (cluster.isMaster) {

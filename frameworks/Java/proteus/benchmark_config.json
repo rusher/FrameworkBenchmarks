@@ -23,6 +23,7 @@
       "versus": ""
     },
     "mysql" : {
+      "dockerfile": "proteus.dockerfile",
       "db_url": "/db/mysql",
       "fortune_url": "/fortunes/mysql",
       "port": 8080,
