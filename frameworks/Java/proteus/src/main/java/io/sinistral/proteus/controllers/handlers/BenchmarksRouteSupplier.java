@@ -60,6 +60,16 @@ public class BenchmarksRouteSupplier implements Supplier<HttpHandler>
 
 		router.addExactPath("/db/mysql", benchmarksDbMySqlHandler);
 
+		final io.undertow.server.HttpHandler benchmarksDbMariaDbHandler = new io.undertow.server.HttpHandler()
+		{
+			@java.lang.Override
+			public void handleRequest(final io.undertow.server.HttpServerExchange exchange) throws java.lang.Exception
+			{
+				benchmarksController.dbMariadb(exchange);
+			}
+		};
+
+		router.addExactPath("/db/mariadb", benchmarksDbMariaDbHandler);
 
 		final io.undertow.server.HttpHandler benchmarksFortunesMysqlHandler = new io.undertow.server.HttpHandler()
 		{
@@ -71,6 +81,17 @@ public class BenchmarksRouteSupplier implements Supplier<HttpHandler>
 		};
 
 		router.addExactPath("/fortunes/mysql", benchmarksFortunesMysqlHandler);
+
+		final io.undertow.server.HttpHandler benchmarksFortunesMariadbHandler = new io.undertow.server.HttpHandler()
+		{
+			@java.lang.Override
+			public void handleRequest(final io.undertow.server.HttpServerExchange exchange) throws java.lang.Exception
+			{
+				benchmarksController.fortunesMariadb(exchange);
+			}
+		};
+
+		router.addExactPath("/fortunes/mariadb", benchmarksFortunesMariadbHandler);
 
 		final io.undertow.server.HttpHandler benchmarksFortunesPostgresDispatchHandler = new io.undertow.server.HttpHandler()
 		{

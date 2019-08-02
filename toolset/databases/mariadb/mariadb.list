@@ -1,0 +1,4 @@
+# You may comment out entries below, but any other modifications may be lost.
+# Use command 'dpkg-reconfigure mysql-apt-config' as root for modifications.
+deb [arch=amd64,arm64,i386,ppc64el] http://mariadb.mirrors.ovh.net/MariaDB/repo/10.4/ubuntu xenial main
+deb-src http://mariadb.mirrors.ovh.net/MariaDB/repo/10.4/ubuntu xenial main

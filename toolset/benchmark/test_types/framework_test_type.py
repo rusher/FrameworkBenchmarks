@@ -163,6 +163,24 @@ class FrameworkTestType:
                 log("ERROR: Unable to load current MySQL World table.",
                     color=Fore.RED)
                 log(tb)
+        elif database_name == "mariadb":
+            try:
+                db = MySQLdb.connect(
+                                     host=self.config.database_host,
+                                     user="benchmarkdbuser",
+                                     passwd="benchmarkdbpass",
+                                     db="hello_world",
+                                     port=3307)
+                cursor = db.cursor()
+                cursor.execute("SELECT * FROM World")
+                results = cursor.fetchall()
+                results_json.append(json.loads(json.dumps(dict(results))))
+                db.close()
+            except Exception:
+                tb = traceback.format_exc()
+                log("ERROR: Unable to load current MariaDB World table.",
+                    color=Fore.RED)
+                log(tb)
         elif database_name == "postgres":
             try:
                 db = psycopg2.connect(

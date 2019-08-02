@@ -6,7 +6,7 @@ of web development platforms.
 
 This project consists of several tests:
 
-* MySql / Postgres DB and Fortunes  
+* MySql/Postgres/MariaDB DB and Fortunes  
 
 * Plaintext and JSON 
 

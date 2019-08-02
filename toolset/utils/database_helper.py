@@ -2,12 +2,25 @@ import MySQLdb
 import psycopg2
 import pymongo
 
-
 def test_database(config, database_name):
     if database_name == "mysql":
         try:
             db = MySQLdb.connect(config.database_host, "benchmarkdbuser",
                                  "benchmarkdbpass", "hello_world")
+            cursor = db.cursor()
+            cursor.execute("SELECT 1")
+            cursor.fetchall()
+            db.close()
+        except:
+            return False
+    elif database_name == "mariadb":
+        try:
+            db = MySQLdb.connect(
+                     host=config.database_host, 
+                     port=3307,
+                     user="benchmarkdbuser",
+                     passwd="benchmarkdbpass",
+                     db="hello_world")
             cursor = db.cursor()
             cursor.execute("SELECT 1")
             cursor.fetchall()

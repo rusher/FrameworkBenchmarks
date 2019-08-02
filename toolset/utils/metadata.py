@@ -15,7 +15,9 @@ class Metadata:
          'One of the most popular databases around the web and in TFB'),
         ('Postgres',
          'An advanced SQL database with a larger feature set than MySQL'),
-        ('MongoDB', 'A popular document-store database')
+        ('MongoDB', 'A popular document-store database'),
+        ('MariaDB',
+         'MariaDB of the most popular database servers, drop-in MySQL replacement')
     ]
 
     def __init__(self, benchmarker=None):

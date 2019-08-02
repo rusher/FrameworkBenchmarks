@@ -38,6 +38,7 @@ import io.sinistral.models.World;
 import io.sinistral.models.WorldEncoder;
 import io.sinistral.proteus.annotations.Blocking;
 import io.sinistral.services.MySqlService;
+import io.sinistral.services.MariaDbService;
 import io.sinistral.services.PostgresService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -100,8 +101,7 @@ public class Benchmarks
     
  
 	protected final MySqlService mySqlService;
-	
-	 
+	protected final MariaDbService mariaDbService;
 	protected final PostgresService postgresService;
 	
    
@@ -110,10 +110,11 @@ public class Benchmarks
     }
 
     @Inject
-    public Benchmarks(PostgresService postgresService, MySqlService mySqlService)
+    public Benchmarks(PostgresService postgresService, MySqlService mySqlService, MariaDbService mariaDbService)
     {
     	this.mySqlService = mySqlService;
     	this.postgresService = postgresService;
+    	this.mariaDbService = mariaDbService;
     }
 	
 	
@@ -228,7 +229,84 @@ public class Benchmarks
 	        exchange.getResponseSender().send(render);  
 		  
 	}
-	
+
+
+	@GET
+	@Path("/db/mariadb")
+	@Blocking
+	@ApiOperation(value = "World mariadb db endpoint",   httpMethod = "GET" , response = World.class)
+	public void dbMariadb(HttpServerExchange exchange)
+	{
+		final World world;
+
+		try (final Connection connection = mariaDbService.getConnection())
+		{
+			try (PreparedStatement statement = connection.prepareStatement("SELECT id,randomNumber FROM world WHERE id = ?"))
+			{
+				statement.setInt(1, randomWorld());
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					resultSet.next();
+					world = new World(resultSet.getInt("id"), resultSet.getInt("randomNumber"));
+				}
+			}
+
+			exchange.getResponseHeaders().put(io.undertow.util.Headers.CONTENT_TYPE, "application/json");
+			ByteArrayOutputStream os = new  ByteArrayOutputStream(128);
+			WorldEncoder.encodeRaw(world, os);
+
+			exchange.getResponseSender().send(ByteBuffer.wrap(os.toByteArray()));
+
+		} catch (Exception e)
+		{
+			throw new IllegalArgumentException();
+		}
+
+
+	}
+
+
+
+	@GET
+	@Path("/fortunes/mariadb")
+	@Produces(MediaType.TEXT_HTML)
+	@Blocking
+	@ApiOperation(value = "Fortunes mariadb endpoint",   httpMethod = "GET"  )
+	public void fortunesMariadb(HttpServerExchange exchange  ) throws Exception
+	{
+
+		List<Fortune> fortunes = new ArrayList<>();
+
+		try (final Connection connection = mariaDbService.getConnection())
+		{
+			try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM Fortune"))
+			{
+
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					while (resultSet.next())
+					{
+						int id = resultSet.getInt("id");
+						String msg = resultSet.getString("message");
+
+						fortunes.add(new Fortune(id, msg));
+					}
+				}
+			}
+		}
+
+		fortunes.add(new Fortune(0, "Additional fortune added at request time."));
+
+		fortunes.sort(null);
+
+		final String render = views.Fortunes.template(fortunes).render(StringBuilderOutput.FACTORY).toString();
+
+		exchange.getResponseHeaders().put(
+				Headers.CONTENT_TYPE, HTML_UTF8_TYPE);
+		exchange.getResponseSender().send(render);
+
+	}
+
 	@GET
 	@Path("/fortunes")
 	@Blocking

@@ -41,6 +41,26 @@
       "display_name": "proteus-mysql",
       "notes": "",
       "versus": ""
+    },
+    "mariadb" : {
+      "dockerfile": "proteus.dockerfile",
+      "db_url": "/db/mariadb",
+      "fortune_url": "/fortunes/mariadb",
+      "port": 8080,
+      "approach": "Realistic",
+      "classification": "Micro",
+      "database": "MariaDB",
+      "framework": "Proteus",
+      "language": "Java",
+      "flavor": "None",
+      "orm": "Raw",
+      "platform": "Undertow",
+      "webserver": "None",
+      "os": "Linux",
+      "database_os": "Linux",
+      "display_name": "proteus-mariadb",
+      "notes": "",
+      "versus": ""
     }
   }]
 }

@@ -17,7 +17,7 @@ ADD pgdg.list pgdg.list
 
 # prepare PostgreSQL APT repository
 RUN cp pgdg.list /etc/apt/sources.list.d/
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ACCC4CF8
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7FCC7D46ACCC4CF8
 
 # install postgresql on database machine
 RUN apt-get -y update > /dev/null

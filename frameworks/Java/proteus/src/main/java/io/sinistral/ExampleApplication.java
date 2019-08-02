@@ -9,6 +9,7 @@ import io.sinistral.proteus.controllers.handlers.BenchmarksRouteSupplier;
 import io.sinistral.proteus.services.AssetsService;
 import io.sinistral.proteus.services.SwaggerService;
 import io.sinistral.services.MySqlService;
+import io.sinistral.services.MariaDbService;
 import io.sinistral.services.PostgresService;
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
@@ -72,6 +73,8 @@ public class ExampleApplication extends ProteusApplication
 		app.addService(AssetsService.class);
 
 		app.addService(MySqlService.class);
+
+		app.addService(MariaDbService.class);
 
 		app.addService(PostgresService.class);
 // 

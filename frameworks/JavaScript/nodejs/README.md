@@ -7,6 +7,8 @@ The logic for the test cases live in these.
 
 * [MySQL raw](handlers/mysql-raw.js)
 * [Sequelize (MySQL)](handlers/sequelize.js)
+* [MariaDB raw](handlers/mariadb-raw.js)
+* [Sequelize (MariaDB)](handlers/sequelize-mariadb.js)
 * [MongoDB raw](handlers/mongodb-raw.js)
 * [Mongoose (MySQL)](handlers/mongoose.js)
 
@@ -17,11 +19,11 @@ The server is currently in Alpha state, but aims to be a drop-in replacement for
 ## Infrastructure Software Versions
 The tests were run with:
 * [Node.js v8.1.0](http://nodejs.org/)
-
 * [Node MySQL 2.15.0](https://github.com/felixge/node-mysql/)
 * [Sequelize 3.30.0](https://github.com/sequelize/sequelize)
 * [Node MongoDB Driver 2.2.33](https://github.com/mongodb/node-mongodb-native)
 * [Mongoose 4.12.4](http://mongoosejs.com/)
+* [MariaDB driver 2.1.0](https://travis-ci.org/MariaDB/mariadb-connector-nodejs)
 
 ## Test URLs
 
